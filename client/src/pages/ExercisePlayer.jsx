@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+
 import { Play, Pause, SkipBack, SkipForward, Maximize2, Settings, Volume2 } from 'lucide-react';
 
 const ExercisePlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="flex bg-serene-bg min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-[4rem] flex flex-col">
+    <main className="w-full p-[4rem] flex flex-col">
         <h1 className="text-[3rem] font-light text-on-surface mb-12 pl-4">Focus & Breathe</h1>
         
         <div className="flex-1 flex flex-col items-center justify-center max-w-[60rem] mx-auto w-full">
@@ -65,7 +63,6 @@ const ExercisePlayer = () => {
           </div>
         </div>
       </main>
-    </div>
   );
 };
 

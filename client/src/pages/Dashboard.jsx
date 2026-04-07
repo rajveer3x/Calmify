@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+
 import ResourceCard from '../components/ResourceCard';
 import { useCalmify } from '../context/MockData';
 import { Calendar, Flame } from 'lucide-react';
@@ -8,10 +8,7 @@ const Dashboard = () => {
   const { currentUser, recommendedResources } = useCalmify();
 
   return (
-    <div className="flex bg-serene-bg min-h-screen">
-      <Sidebar />
-      
-      <main className="flex-1 p-[4rem] overflow-y-auto">
+    <main className="w-full p-[4rem]">
         <header className="mb-16">
           <div className="flex justify-between items-center bg-serene-lower p-10 rounded-[3rem]">
             <div>
@@ -62,7 +59,6 @@ const Dashboard = () => {
           <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary-container rounded-full blur-[100px] opacity-30" />
         </section>
       </main>
-    </div>
   );
 };
 

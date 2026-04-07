@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Home, Compass, Book, Activity } from 'lucide-react';
 import { useCalmify } from '../context/MockData';
 
@@ -6,14 +7,13 @@ const Sidebar = () => {
   const { currentUser } = useCalmify();
 
   const navItems = [
-    { name: 'Home', icon: Home, active: true },
-    { name: 'Exercises', icon: Compass, active: false },
-    { name: 'Journal', icon: Book, active: false },
-    { name: 'Progress', icon: Activity, active: false },
+    { name: 'Home', path: '/dashboard', icon: Home },
+    { name: 'Exercises', path: '/exercises', icon: Compass },
+    { name: 'Journal', path: '/journal', icon: Book },
   ];
 
   return (
-    <aside className="w-72 h-screen bg-serene-bg hidden md:flex flex-col transition-colors duration-300 py-8 px-6">
+    <aside className="w-72 h-screen bg-serene-bg hidden md:flex flex-col transition-colors duration-300 py-8 px-6 border-r border-outline-variant/10 shrink-0">
       <div className="mb-12 pl-2">
         <h1 className="text-3xl font-light tracking-tight text-on-surface flex items-center gap-3">
           <span className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-white shadow-[0_10px_40px_-5px_rgba(42,52,53,0.15)]">
@@ -27,22 +27,27 @@ const Sidebar = () => {
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
-            <a
+            <NavLink
               key={item.name}
-              href={`#${item.name.toLowerCase()}`}
-              className={`flex items-center gap-4 px-5 py-4 rounded-full transition-all duration-500 ease-out group
-                ${item.active 
+              to={item.path}
+              className={({ isActive }) => `flex items-center gap-4 px-5 py-4 rounded-full transition-all duration-500 ease-out group
+                ${isActive 
                   ? 'bg-serene-low text-primary font-medium shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]' 
-                  : 'text-on-surface/60 hover:bg-serene-low/50 hover:text-on-surface'}`}
+                  : 'text-on-surface/60 hover:bg-serene-low/50 hover:text-on-surface'}`
+              }
             >
-              <Icon 
-                size={22} 
-                className={`transition-transform duration-500 group-hover:scale-105 
-                  ${item.active ? 'stroke-primary' : 'stroke-current'}`} 
-                strokeWidth={1.5}
-              />
-              <span className="text-lg tracking-wide">{item.name}</span>
-            </a>
+              {({ isActive }) => (
+                <>
+                  <Icon 
+                    size={22} 
+                    className={`transition-transform duration-500 group-hover:scale-105 
+                      ${isActive ? 'stroke-primary' : 'stroke-current'}`} 
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-lg tracking-wide">{item.name}</span>
+                </>
+              )}
+            </NavLink>
           );
         })}
       </nav>

@@ -1,12 +1,10 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+
 import { PenTool, CheckCircle2, TrendingUp } from 'lucide-react';
 
 const ProgressJournal = () => {
   return (
-    <div className="flex bg-serene-bg min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-[4rem] overflow-y-auto">
+    <main className="w-full p-[4rem] overflow-y-auto">
         <h1 className="text-[3rem] font-light text-on-surface mb-12 pl-4">Progress & Reflection</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -76,7 +74,6 @@ const ProgressJournal = () => {
           </div>
         </div>
       </main>
-    </div>
   );
 };
 

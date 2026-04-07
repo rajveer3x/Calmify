@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+
 import ResourceCard from '../components/ResourceCard';
 import { useCalmify } from '../context/MockData';
 import { Search, Filter } from 'lucide-react';
@@ -9,9 +9,7 @@ const ResourceLibrary = () => {
   const allResources = [...recommendedResources, ...recommendedResources]; 
 
   return (
-    <div className="flex bg-serene-bg min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-[4rem] overflow-y-auto">
+    <main className="w-full p-[4rem]">
         <div className="mb-12 flex justify-between items-center pl-4">
           <h1 className="text-[3rem] font-light text-on-surface tracking-tight">Resource Library</h1>
         </div>
@@ -44,7 +42,6 @@ const ResourceLibrary = () => {
           ))}
         </div>
       </main>
-    </div>
   );
 };
 

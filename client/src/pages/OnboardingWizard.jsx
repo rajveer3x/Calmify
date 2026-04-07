@@ -1,17 +1,44 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, Target, Moon, Sun } from 'lucide-react';
+import { ArrowRight, Sparkles, Briefcase, BookOpen, Users, Moon } from 'lucide-react';
 
 const OnboardingWizard = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [selectedTriggers, setSelectedTriggers] = useState([]);
 
-  const goals = [
-    { id: 'anxiety', icon: Target, label: 'Reduce Anxiety' },
-    { id: 'sleep', icon: Moon, label: 'Sleep Better' },
-    { id: 'focus', icon: Sun, label: 'Improve Focus' },
-    { id: 'general', icon: Sparkles, label: 'General Wellbeing' },
+  const triggers = [
+    { 
+      id: 'work', 
+      icon: Briefcase, 
+      label: 'Work',
+      description: 'Deadlines, meetings, and office pressure.'
+    },
+    { 
+      id: 'study', 
+      icon: BookOpen, 
+      label: 'Study',
+      description: 'Exams, research, and learning exhaustion.'
+    },
+    { 
+      id: 'social', 
+      icon: Users, 
+      label: 'Social',
+      description: 'Crowds, networking, and digital noise.'
+    },
+    { 
+      id: 'sleep', 
+      icon: Moon, 
+      label: 'Sleep',
+      description: 'Difficulty winding down or staying asleep due to mental chatter.'
+    },
   ];
+
+  const handleToggle = (id) => {
+    setSelectedTriggers(prev => 
+      prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
+    );
+  };
 
   const handleNext = () => {
     if (step < 2) {
@@ -27,12 +54,12 @@ const OnboardingWizard = () => {
       {/* Decorative gradient elements */}
       <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-primary-container/20 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       
-      <div className="w-full max-w-[48rem] bg-serene-lowest rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(42,52,53,0.06)] p-16 relative z-10">
+      <div className="w-full max-w-[48rem] bg-serene-lowest rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(42,52,53,0.06)] p-16 relative z-10 transition-all duration-500">
         
         <div className="mb-12">
           <div className="flex justify-between items-center mb-4">
             <span className="text-sm font-bold tracking-widest uppercase text-primary">Step {step} of 2</span>
-            <span className="text-sm font-medium text-on-surface/50">Personalizing your journey</span>
+            <span className="text-sm font-medium text-on-surface/50">Curating your experience</span>
           </div>
           <div className="w-full bg-serene-lower rounded-full h-1.5 overflow-hidden">
             <div className="bg-primary h-full rounded-full transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]" style={{ width: `${(step / 2) * 100}%` }}></div>
@@ -42,21 +69,40 @@ const OnboardingWizard = () => {
         {step === 1 ? (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
             <div>
-              <h2 className="text-[2.5rem] font-light text-on-surface leading-tight mb-2">What's your main focus?</h2>
-              <p className="text-on-surface/60 text-lg">Select a primary goal to help us tailor your experience.</p>
+              <h2 className="text-[2.5rem] font-light text-on-surface leading-tight mb-2">What are your main triggers?</h2>
+              <p className="text-on-surface/60 text-lg">Select all that apply to help us curate your digital sanctuary experience.</p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12">
-              {goals.map((goal) => {
-                const Icon = goal.icon;
+              {triggers.map((trigger) => {
+                const Icon = trigger.icon;
+                const isSelected = selectedTriggers.includes(trigger.id);
                 return (
-                  <button key={goal.id} className="flex items-center p-6 rounded-[2rem] bg-serene-low hover:bg-primary-container/20 transition-all duration-500 group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-full bg-serene-lowest flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                      <Icon className="w-6 h-6 text-on-surface/50 group-hover:text-primary transition-colors duration-500 stroke-[1.5]" />
+                  <button 
+                    key={trigger.id} 
+                    onClick={() => handleToggle(trigger.id)}
+                    className={`flex flex-col text-left p-8 rounded-[2rem] border transition-all duration-500 group
+                      ${isSelected 
+                        ? 'bg-serene-lowest border-primary shadow-[0_10px_30px_-10px_rgba(58,102,92,0.15)] scale-[1.02]' 
+                        : 'bg-serene-low border-transparent hover:bg-primary-container/10 hover:border-primary/20'}`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-500
+                        ${isSelected ? 'bg-primary-container text-primary' : 'bg-serene-lowest text-on-surface/50 group-hover:text-primary shadow-sm'}`}
+                      >
+                        <Icon className="w-6 h-6 stroke-[1.5]" />
+                      </div>
+                      <span className={`text-xl font-medium transition-colors duration-500
+                        ${isSelected ? 'text-primary' : 'text-on-surface group-hover:text-primary'}`}
+                      >
+                        {trigger.label}
+                      </span>
                     </div>
-                    <div className="ml-5 text-left">
-                      <span className="block text-lg font-medium text-on-surface group-hover:text-primary transition-colors duration-500">{goal.label}</span>
-                    </div>
+                    <p className={`text-sm leading-relaxed transition-colors duration-500
+                      ${isSelected ? 'text-on-surface/80' : 'text-on-surface/50 group-hover:text-on-surface/70'}`}
+                    >
+                      {trigger.description}
+                    </p>
                   </button>
                 );
               })}
@@ -69,12 +115,18 @@ const OnboardingWizard = () => {
             </div>
             <h2 className="text-[3rem] font-light text-on-surface">You're all set.</h2>
             <p className="text-on-surface/60 text-lg max-w-lg mx-auto leading-relaxed">
-              We've customized your recommended exercises and crafted your dashboard. It's time to begin.
+              We've customized your recommended exercises and crafted your sanctuary dashboard.
             </p>
           </div>
         )}
 
-        <div className="mt-16 flex justify-end">
+        <div className="mt-16 flex justify-between items-center border-t border-outline-variant/10 pt-8">
+          {step === 1 ? (
+             <span className="text-sm font-bold tracking-widest text-on-surface/40 uppercase">
+                {selectedTriggers.length} selected
+             </span>
+          ) : <div />}
+
           <button
             onClick={handleNext}
             className="flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-primary to-primary-dim text-white rounded-full font-bold uppercase tracking-widest text-sm hover:brightness-110 transition-all duration-500 shadow-[0_20px_40px_-10px_rgba(58,102,92,0.3)] hover:-translate-y-1"
