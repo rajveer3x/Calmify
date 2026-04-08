@@ -1,0 +1,33 @@
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/calmify';
+
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const resourceRoutes = require('./routes/resource');
+const logRoutes = require('./routes/log');
+
+app.use(cors());
+app.use(express.json());
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/logs', logRoutes);
+
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('Successfully connected to MongoDB.'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Calmify API is running smoothly' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
