@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCalmify } from '../context/CalmifyContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, authError, clearAuthError } = useCalmify();
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const location = useLocation();
+  const isRegisterMode = location.pathname === '/register';
+  const { login, register, authError, clearAuthError } = useCalmify();
+  const [formState, setFormState] = useState({ name: '', email: '', password: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
+
+  const getReadableError = (error) => {
+    if (error.response?.data?.message) {
+      return error.response.data.message;
+    }
+
+    if (error.code === 'ERR_NETWORK') {
+      return 'Cannot reach the server. Please make sure the Express API is running on localhost:5000.';
+    }
+
+    return isRegisterMode ? 'Unable to create your account right now.' : 'Unable to sign in right now.';
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,11 +36,14 @@ const LoginPage = () => {
     setFormError('');
 
     try {
-      const user = await login(formState);
+      const user = isRegisterMode
+        ? await register(formState)
+        : await login({ email: formState.email, password: formState.password });
+
       const hasTriggers = Array.isArray(user?.triggers) && user.triggers.length > 0;
       navigate(hasTriggers ? '/dashboard' : '/onboarding');
     } catch (error) {
-      setFormError(error.response?.data?.message || 'Unable to sign in right now.');
+      setFormError(getReadableError(error));
     } finally {
       setIsSubmitting(false);
     }
@@ -41,15 +58,32 @@ const LoginPage = () => {
             <span className="text-4xl font-light text-white">C</span>
           </div>
           <h2 className="text-3xl font-medium tracking-tight text-on-surface">
-            Welcome to Calmify
+            {isRegisterMode ? 'Create your Calmify account' : 'Welcome back to Calmify'}
           </h2>
           <p className="mt-3 text-on-surface/60 font-light">
-            Your digital sanctuary for mindfulness.
+            {isRegisterMode
+              ? 'Start your digital sanctuary for mindfulness.'
+              : 'Your digital sanctuary for mindfulness.'}
           </p>
         </div>
 
         <form className="space-y-8" onSubmit={handleSubmit}>
           <div className="space-y-5">
+            {isRegisterMode ? (
+              <div>
+                <label htmlFor="name" className="sr-only">Full name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  value={formState.name}
+                  onChange={handleChange}
+                  className="appearance-none rounded-full block w-full px-6 py-4 bg-serene-low placeholder-outline-variant text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all font-medium"
+                  placeholder="Full name"
+                />
+              </div>
+            ) : null}
             <div>
               <label htmlFor="email-address" className="sr-only">Email address</label>
               <input
@@ -84,13 +118,25 @@ const LoginPage = () => {
             </p>
           ) : null}
 
+          <p className="text-sm text-on-surface/60 px-2">
+            {isRegisterMode ? 'Already have an account?' : "Don't have an account yet?"}{' '}
+            <Link
+              to={isRegisterMode ? '/login' : '/register'}
+              className="text-primary font-semibold"
+            >
+              {isRegisterMode ? 'Sign in' : 'Create one'}
+            </Link>
+          </p>
+
           <div>
             <button
               type="submit"
               disabled={isSubmitting}
               className="group relative w-full flex justify-center py-4 px-4 rounded-full text-white bg-gradient-to-r from-primary to-primary-dim font-bold tracking-widest uppercase text-sm hover:brightness-110 focus:outline-none transition-all duration-500 shadow-xl shadow-primary/20"
             >
-              {isSubmitting ? 'Entering...' : 'Enter Sanctuary'}
+              {isSubmitting
+                ? (isRegisterMode ? 'Creating Account...' : 'Entering...')
+                : (isRegisterMode ? 'Create Account' : 'Enter Sanctuary')}
             </button>
           </div>
         </form>

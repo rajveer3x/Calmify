@@ -90,6 +90,17 @@ export const CalmifyProvider = ({ children }) => {
     return data.user;
   };
 
+  const register = async (payload) => {
+    const { data } = await api.post('/auth/register', payload);
+
+    setStoredToken(data.token);
+    setCurrentUser(data.user);
+    setRecommendedResources([]);
+    setAuthError('');
+
+    return data.user;
+  };
+
   const completeOnboarding = async (triggers) => {
     const { data } = await api.post('/users/onboarding', { triggers });
     setCurrentUser(data);
@@ -113,6 +124,7 @@ export const CalmifyProvider = ({ children }) => {
     isLoadingResources,
     login,
     logout,
+    register,
     recommendedResources,
   };
 

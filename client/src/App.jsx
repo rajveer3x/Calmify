@@ -55,6 +55,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<LoginPage />} />
         </Route>
         
         <Route element={<ProtectedRoute />}>
