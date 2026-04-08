@@ -35,7 +35,7 @@ const ProtectedRoute = () => {
 }
 
 const PublicRoute = () => {
-  const { isAuthenticated, isBootstrapping } = useCalmify()
+  const { isAuthenticated, isBootstrapping, currentUser } = useCalmify()
 
   if (isBootstrapping) {
     return (
@@ -45,7 +45,27 @@ const PublicRoute = () => {
     )
   }
 
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />
+  if (!isAuthenticated) {
+    return <Outlet />
+  }
+
+  const hasTriggers = Array.isArray(currentUser?.triggers) && currentUser.triggers.length > 0
+
+  return <Navigate to={hasTriggers ? "/dashboard" : "/onboarding"} replace />
+}
+
+const AppContentRoute = () => {
+  const { currentUser } = useCalmify()
+  const hasTriggers = Array.isArray(currentUser?.triggers) && currentUser.triggers.length > 0
+
+  return hasTriggers ? <Outlet /> : <Navigate to="/onboarding" replace />
+}
+
+const OnboardingRoute = () => {
+  const { currentUser } = useCalmify()
+  const hasTriggers = Array.isArray(currentUser?.triggers) && currentUser.triggers.length > 0
+
+  return hasTriggers ? <Navigate to="/dashboard" replace /> : <Outlet />
 }
 
 function App() {
@@ -59,12 +79,16 @@ function App() {
         </Route>
         
         <Route element={<ProtectedRoute />}>
-          <Route path="/onboarding" element={<OnboardingWizard />} />
-          <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/exercises" element={<ResourceLibrary />} />
-            <Route path="/player" element={<ExercisePlayer />} />
-            <Route path="/journal" element={<ProgressJournal />} />
+          <Route element={<OnboardingRoute />}>
+            <Route path="/onboarding" element={<OnboardingWizard />} />
+          </Route>
+          <Route element={<AppContentRoute />}>
+            <Route element={<MainLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/exercises" element={<ResourceLibrary />} />
+              <Route path="/player" element={<ExercisePlayer />} />
+              <Route path="/journal" element={<ProgressJournal />} />
+            </Route>
           </Route>
         </Route>
         
