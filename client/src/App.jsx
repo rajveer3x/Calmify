@@ -6,6 +6,7 @@ import ResourceLibrary from './pages/ResourceLibrary'
 import ExercisePlayer from './pages/ExercisePlayer'
 import ProgressJournal from './pages/ProgressJournal'
 import Sidebar from './components/Sidebar'
+import { useCalmify } from './context/CalmifyContext'
 import './App.css'
 
 const MainLayout = () => {
@@ -19,23 +20,53 @@ const MainLayout = () => {
   )
 }
 
+const ProtectedRoute = () => {
+  const { isAuthenticated, isBootstrapping } = useCalmify()
+
+  if (isBootstrapping) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-serene-bg text-on-surface/70">
+        Restoring your sanctuary...
+      </div>
+    )
+  }
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
+}
+
+const PublicRoute = () => {
+  const { isAuthenticated, isBootstrapping } = useCalmify()
+
+  if (isBootstrapping) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-serene-bg text-on-surface/70">
+        Restoring your sanctuary...
+      </div>
+    )
+  }
+
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />
+}
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/onboarding" element={<OnboardingWizard />} />
-        
-        {/* Main App Layout Routes */}
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/exercises" element={<ResourceLibrary />} />
-          <Route path="/player" element={<ExercisePlayer />} />
-          <Route path="/journal" element={<ProgressJournal />} />
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LoginPage />} />
         </Route>
         
-        {/* Catch all */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/onboarding" element={<OnboardingWizard />} />
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/exercises" element={<ResourceLibrary />} />
+            <Route path="/player" element={<ExercisePlayer />} />
+            <Route path="/journal" element={<ProgressJournal />} />
+          </Route>
+        </Route>
+        
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

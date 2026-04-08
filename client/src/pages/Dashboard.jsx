@@ -1,11 +1,11 @@
 import React from 'react';
 
 import ResourceCard from '../components/ResourceCard';
-import { useCalmify } from '../context/MockData';
+import { useCalmify } from '../context/CalmifyContext';
 import { Calendar, Flame } from 'lucide-react';
 
 const Dashboard = () => {
-  const { currentUser, recommendedResources } = useCalmify();
+  const { currentUser, recommendedResources, isLoadingResources } = useCalmify();
 
   return (
     <main className="w-full p-[4rem]">
@@ -44,9 +44,17 @@ const Dashboard = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recommendedResources.map((resource) => (
+            {isLoadingResources ? (
+              <div className="col-span-full rounded-[2rem] bg-serene-lowest p-8 text-on-surface/60">
+                Loading your recommended exercises...
+              </div>
+            ) : recommendedResources.length > 0 ? recommendedResources.map((resource) => (
               <ResourceCard key={resource.id} resource={resource} />
-            ))}
+            )) : (
+              <div className="col-span-full rounded-[2rem] bg-serene-lowest p-8 text-on-surface/60">
+                No recommendations yet. Finish onboarding to personalize your library.
+              </div>
+            )}
           </div>
         </section>
 

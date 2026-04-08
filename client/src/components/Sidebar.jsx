@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, Compass, Book, Activity } from 'lucide-react';
-import { useCalmify } from '../context/MockData';
+import { useCalmify } from '../context/CalmifyContext';
 
 const Sidebar = () => {
   const { currentUser } = useCalmify();

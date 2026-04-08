@@ -1,12 +1,12 @@
 import React from 'react';
 
 import ResourceCard from '../components/ResourceCard';
-import { useCalmify } from '../context/MockData';
+import { useCalmify } from '../context/CalmifyContext';
 import { Search, Filter } from 'lucide-react';
 
 const ResourceLibrary = () => {
-  const { recommendedResources } = useCalmify();
-  const allResources = [...recommendedResources, ...recommendedResources]; 
+  const { recommendedResources, isLoadingResources } = useCalmify();
+  const allResources = recommendedResources;
 
   return (
     <main className="w-full p-[4rem]">
@@ -37,9 +37,17 @@ const ResourceLibrary = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allResources.map((resource, i) => (
-            <ResourceCard key={i} resource={resource} />
-          ))}
+          {isLoadingResources ? (
+            <div className="col-span-full rounded-[2rem] bg-serene-lowest p-8 text-on-surface/60">
+              Loading resource library...
+            </div>
+          ) : allResources.length > 0 ? allResources.map((resource) => (
+            <ResourceCard key={resource.id} resource={resource} />
+          )) : (
+            <div className="col-span-full rounded-[2rem] bg-serene-lowest p-8 text-on-surface/60">
+              No resources are available right now.
+            </div>
+          )}
         </div>
       </main>
   );

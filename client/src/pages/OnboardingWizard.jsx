@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Sparkles, Briefcase, BookOpen, Users, Moon } from 'lucide-react';
+import { useCalmify } from '../context/CalmifyContext';
 
 const OnboardingWizard = () => {
   const navigate = useNavigate();
+  const { completeOnboarding } = useCalmify();
   const [step, setStep] = useState(1);
   const [selectedTriggers, setSelectedTriggers] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState('');
 
   const triggers = [
     { 
@@ -40,11 +44,21 @@ const OnboardingWizard = () => {
     );
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step < 2) {
       setStep(step + 1);
     } else {
-      navigate('/dashboard');
+      setIsSaving(true);
+      setError('');
+
+      try {
+        await completeOnboarding(selectedTriggers);
+        navigate('/dashboard');
+      } catch (requestError) {
+        setError(requestError.response?.data?.message || 'Unable to save your onboarding choices.');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -127,11 +141,18 @@ const OnboardingWizard = () => {
              </span>
           ) : <div />}
 
+          {error ? (
+            <p className="text-sm text-red-600 font-medium">
+              {error}
+            </p>
+          ) : null}
+
           <button
             onClick={handleNext}
+            disabled={isSaving}
             className="flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-primary to-primary-dim text-white rounded-full font-bold uppercase tracking-widest text-sm hover:brightness-110 transition-all duration-500 shadow-[0_20px_40px_-10px_rgba(58,102,92,0.3)] hover:-translate-y-1"
           >
-            {step === 1 ? 'Continue' : 'Enter Sanctuary'}
+            {step === 1 ? 'Continue' : isSaving ? 'Saving...' : 'Enter Sanctuary'}
             <ArrowRight className="w-5 h-5 stroke-[2.5]" />
           </button>
         </div>
