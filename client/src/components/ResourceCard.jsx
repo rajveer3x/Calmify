@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PlayCircle, Headphones, FileText, Clock, Tag, ChevronRight } from 'lucide-react';
 
 const ResourceCard = ({ resource }) => {
-  const { title, type, duration, category } = resource;
+  const { title, type, duration, category, id, _id } = resource;
+  const resourceId = id || _id;
 
   const getTypeIcon = (resourceType) => {
     switch (resourceType.toLowerCase()) {
@@ -14,7 +16,10 @@ const ResourceCard = ({ resource }) => {
   };
 
   return (
-    <div className="group relative bg-serene-lowest rounded-[3rem] p-8 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-2 hover:shadow-[0_20px_40px_-5px_rgba(42,52,53,0.08)] cursor-pointer">
+    <Link 
+      to={`/play/${resourceId}`}
+      className="group relative block w-full text-left bg-serene-lowest rounded-[3rem] p-8 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-2 hover:shadow-[0_20px_40px_-5px_rgba(42,52,53,0.08)] cursor-pointer"
+    >
       
       {/* Header Ribbon & Icon */}
       <div className="flex justify-between items-start mb-8">
@@ -49,7 +54,8 @@ const ResourceCard = ({ resource }) => {
         <ChevronRight strokeWidth={2} className="w-6 h-6" />
       </div>
       
-    </div>
+      
+    </Link>
   );
 };
 
