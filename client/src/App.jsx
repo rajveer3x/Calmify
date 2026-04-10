@@ -8,6 +8,7 @@ import ProgressJournal from './pages/ProgressJournal'
 import InteractiveBreathingTool from './pages/InteractiveBreathingTool'
 import ActiveExercisePlayer from './pages/ActiveExercisePlayer'
 import ProfileSettings from './pages/ProfileSettings'
+import ChatCompanion from './pages/ChatCompanion'
 import Sidebar from './components/Sidebar'
 import { useCalmify } from './context/CalmifyContext'
 import './App.css'
@@ -94,6 +95,7 @@ function App() {
               <Route path="/journal" element={<ProgressJournal />} />
               <Route path="/breathe" element={<InteractiveBreathingTool />} />
               <Route path="/profile" element={<ProfileSettings />} />
+              <Route path="/companion" element={<ChatCompanion />} />
             </Route>
           </Route>
         </Route>

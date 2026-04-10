@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Home, Compass, Book, Activity } from 'lucide-react';
+import { Home, Compass, Book, Activity, MessageCircle } from 'lucide-react';
 import { useCalmify } from '../context/CalmifyContext';
 
 const Sidebar = () => {
@@ -10,6 +10,7 @@ const Sidebar = () => {
     { name: 'Home', path: '/dashboard', icon: Home },
     { name: 'Exercises', path: '/exercises', icon: Compass },
     { name: 'Journal', path: '/journal', icon: Book },
+    { name: 'Companion', path: '/companion', icon: MessageCircle },
   ];
 
   return (
