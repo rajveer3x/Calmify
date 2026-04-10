@@ -61,21 +61,21 @@ const Sidebar = () => {
           <span>Start Breathing</span>
         </Link>
 
-        <div className="p-5 bg-serene-lower rounded-[2rem] flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full border border-outline-variant/20 bg-serene-lowest flex justify-center items-center p-1 shadow-sm">
-            <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-sm font-bold text-white uppercase">
+        <NavLink to="/profile" className="p-5 bg-serene-lower rounded-[2rem] flex items-center gap-4 hover:bg-serene-low transition-colors group cursor-pointer block">
+          <div className="w-12 h-12 rounded-full border border-outline-variant/20 bg-serene-lowest flex justify-center items-center p-1 shadow-sm group-hover:border-primary/20 transition-colors">
+            <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-sm font-bold text-white uppercase group-hover:bg-primary-dim transition-colors">
               {currentUser?.name?.charAt(0) || 'U'}
             </div>
           </div>
           <div>
-            <p className="text-base font-medium text-on-surface tracking-wide">
+            <p className="text-base font-medium text-on-surface tracking-wide group-hover:text-primary transition-colors">
               {currentUser?.name || 'User'}
             </p>
             <p className="text-xs text-primary font-bold tracking-[0.1em] uppercase mt-0.5">
               {currentUser?.currentStreak} Day Streak
             </p>
           </div>
-        </div>
+        </NavLink>
       </div>
     </aside>
   );
