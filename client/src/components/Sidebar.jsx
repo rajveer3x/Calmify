@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Home, Compass, Book, Activity } from 'lucide-react';
 import { useCalmify } from '../context/CalmifyContext';
 
@@ -52,7 +52,15 @@ const Sidebar = () => {
         })}
       </nav>
 
-      <div className="mt-auto pt-6">
+      <div className="mt-auto pt-6 flex flex-col gap-4">
+        <Link 
+          to="/breathe"
+          className="flex items-center justify-center gap-2 w-full py-3.5 bg-primary/10 text-primary rounded-[2rem] font-bold tracking-wide hover:bg-primary hover:text-white transition-all duration-500 shadow-sm"
+        >
+          <Activity size={20} strokeWidth={2.5} />
+          <span>Start Breathing</span>
+        </Link>
+
         <div className="p-5 bg-serene-lower rounded-[2rem] flex items-center gap-4">
           <div className="w-12 h-12 rounded-full border border-outline-variant/20 bg-serene-lowest flex justify-center items-center p-1 shadow-sm">
             <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-sm font-bold text-white uppercase">
