@@ -52,12 +52,12 @@ const ChatCompanion = () => {
   };
 
   return (
-    <main className="w-full h-full flex flex-col items-center justify-center bg-serene-bg p-4 md:p-8">
+    <main className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-serene-bg to-primary/5 p-4 md:p-8">
       
-      <div className="w-full max-w-4xl h-full max-h-[85vh] flex flex-col bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden relative">
+      <div className="w-full max-w-4xl h-full max-h-[85vh] flex flex-col bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(42,52,53,0.1)] border border-white overflow-hidden relative">
         
         {/* Header Ribbon */}
-        <div className="bg-[#f8fafa] p-6 md:px-10 border-b border-gray-100 shrink-0 relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="bg-white/60 backdrop-blur-md p-6 md:px-10 border-b border-gray-100/50 shrink-0 relative z-20 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
            <div className="flex items-center gap-4">
              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#3a665c] to-[#26453e] flex items-center justify-center shadow-lg shadow-[#3a665c]/20">
                <Sparkles className="w-6 h-6 text-white stroke-[1.5]" />
@@ -70,7 +70,7 @@ const ChatCompanion = () => {
         </div>
 
         {/* Disclaimer Banner */}
-        <div className="bg-red-50 px-6 py-3 shrink-0 flex items-center gap-3 border-b border-red-100">
+        <div className="bg-red-50/80 backdrop-blur-sm mx-6 mt-6 p-4 rounded-2xl shrink-0 flex items-center gap-3 border border-red-100 shadow-sm relative z-10">
            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 stroke-[2]" />
            <p className="text-xs md:text-sm font-medium text-red-700">
              I am an AI companion, not a medical professional. If you are in crisis, please call emergency services immediately.
@@ -78,7 +78,7 @@ const ChatCompanion = () => {
         </div>
 
         {/* Chat Body */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-10 bg-[#f8fafa]">
+        <div className="flex-1 overflow-y-auto p-6 md:p-10 bg-transparent flex flex-col relative z-0">
           <div className="flex flex-col gap-6">
             {messages.map((msg) => {
               const isBot = msg.role === 'bot';
@@ -86,15 +86,15 @@ const ChatCompanion = () => {
                 <div key={msg.id} className={`flex gap-4 max-w-[85%] ${isBot ? 'self-start' : 'self-end flex-row-reverse'}`}>
                   
                   {/* Avatar */}
-                  <div className={`w-10 h-10 rounded-full flex shrink-0 items-center justify-center mt-auto shadow-sm ${isBot ? 'bg-[#3a665c] text-white' : 'bg-gray-200 text-gray-600'}`}>
+                  <div className={`w-10 h-10 rounded-full flex shrink-0 items-center justify-center mt-auto shadow-md border border-white ${isBot ? 'bg-gradient-to-br from-[#3a665c] to-[#26453e] text-white' : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500'}`}>
                     {isBot ? <Sparkles className="w-5 h-5 stroke-[1.5]" /> : <UserIcon className="w-5 h-5 stroke-[1.5]" />}
                   </div>
 
                   {/* Message Bubble */}
-                  <div className={`p-5 rounded-3xl text-[1.05rem] leading-relaxed shadow-sm ${
+                  <div className={`p-5 rounded-[2rem] text-[1.05rem] leading-relaxed shadow-[0_10px_20px_-10px_rgba(0,0,0,0.05)] ${
                     isBot 
-                      ? 'bg-white text-gray-800 border border-gray-100 rounded-bl-sm' 
-                      : 'bg-[#3a665c] text-white rounded-br-sm'
+                      ? 'bg-white/90 backdrop-blur-sm text-gray-800 border border-gray-100 rounded-bl-md' 
+                      : 'bg-gradient-to-br from-[#3a665c] to-[#26453e] text-white rounded-br-md shadow-[#3a665c]/20 border border-[#488073]/30'
                   }`}>
                     {msg.text}
                   </div>
@@ -104,10 +104,10 @@ const ChatCompanion = () => {
 
             {isTyping && (
                <div className="flex gap-4 max-w-[85%] self-start fade-in animate-in">
-                 <div className="w-10 h-10 rounded-full flex shrink-0 items-center justify-center mt-auto shadow-sm bg-[#3a665c] text-white">
+                 <div className="w-10 h-10 rounded-full flex shrink-0 items-center justify-center mt-auto shadow-md border border-white bg-gradient-to-br from-[#3a665c] to-[#26453e] text-white">
                    <Sparkles className="w-5 h-5 stroke-[1.5]" />
                  </div>
-                 <div className="p-5 rounded-3xl bg-white text-gray-800 border border-gray-100 rounded-bl-sm shadow-sm flex items-center gap-2 h-[60px]">
+                 <div className="p-5 rounded-[2rem] bg-white/90 backdrop-blur-sm text-gray-800 border border-gray-100 rounded-bl-md shadow-[0_10px_20px_-10px_rgba(0,0,0,0.05)] flex items-center gap-2 h-[60px]">
                    <span className="w-2 h-2 bg-[#3a665c]/40 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
                    <span className="w-2 h-2 bg-[#3a665c]/40 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
                    <span className="w-2 h-2 bg-[#3a665c]/40 rounded-full animate-bounce"></span>
@@ -120,20 +120,20 @@ const ChatCompanion = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white p-6 shrink-0 border-t border-gray-100">
-          <form onSubmit={handleSend} className="relative flex items-center">
+        <div className="bg-white/70 backdrop-blur-lg p-6 shrink-0 border-t border-white shadow-[0_-10px_40px_-20px_rgba(42,52,53,0.05)] relative z-20">
+          <form onSubmit={handleSend} className="relative flex items-center shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] rounded-full">
             <input 
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Type your message here..."
               disabled={isTyping}
-              className="w-full bg-[#f8fafa] border border-gray-200 rounded-full px-8 py-5 pr-16 outline-none focus:ring-2 focus:ring-[#3a665c]/20 text-gray-800 placeholder-gray-400 disabled:opacity-50 transition-all font-medium"
+              className="w-full bg-white border border-gray-100/80 rounded-full px-8 py-5 pr-16 outline-none focus:ring-2 focus:ring-[#3a665c]/30 text-gray-800 placeholder-gray-400 disabled:opacity-50 transition-all font-medium"
             />
             <button 
               type="submit"
               disabled={isTyping || !inputValue.trim()}
-              className="absolute right-3 w-12 h-12 bg-[#3a665c] text-white rounded-full flex items-center justify-center hover:bg-[#26453e] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors shadow-sm"
+              className="absolute right-3 w-12 h-12 bg-gradient-to-br from-[#3a665c] to-[#26453e] text-white rounded-full flex items-center justify-center hover:opacity-90 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
             >
               <Send className="w-5 h-5 -ml-0.5" strokeWidth={2} />
             </button>
