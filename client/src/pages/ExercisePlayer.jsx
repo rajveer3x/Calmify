@@ -82,11 +82,11 @@ const ExercisePlayer = () => {
   };
 
   return (
-    <main className="w-full p-[4rem] flex flex-col">
-      <h1 className="text-[3rem] font-light text-on-surface mb-12 pl-4">Focus & Breathe</h1>
+    <main className="w-full p-[4rem] flex flex-col transition-colors duration-500">
+      <h1 className="text-[3rem] font-light text-on-surface dark:text-[#e0e8e6] mb-12 pl-4 transition-colors">Focus & Breathe</h1>
 
       <div className="flex-1 flex flex-col items-center justify-center max-w-[60rem] mx-auto w-full">
-        <div className="relative w-full aspect-video bg-serene-lowest rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(42,52,53,0.06)] overflow-hidden mb-16 flex items-center justify-center border border-outline-variant/10">
+        <div className="relative w-full aspect-video bg-serene-lowest dark:bg-[#1b2b28] rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(42,52,53,0.06)] dark:shadow-black/50 overflow-hidden mb-16 flex items-center justify-center border border-outline-variant/10 dark:border-white/5 transition-colors duration-500">
           <div
             className="absolute w-96 h-96 bg-primary-container rounded-full blur-[110px] opacity-60 transition-all ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{
@@ -106,7 +106,7 @@ const ExercisePlayer = () => {
 
           <div className="relative z-10 flex flex-col items-center gap-8">
             <div
-              className="w-72 h-72 rounded-full border border-primary-container/50 bg-serene-lowest/60 backdrop-blur-xl flex flex-col items-center justify-center shadow-2xl shadow-primary-container/30 transition-all ease-[cubic-bezier(0.22,1,0.36,1)]"
+              className="w-72 h-72 rounded-full border border-primary-container/50 dark:border-[#3a665c]/50 bg-serene-lowest/60 dark:bg-[#121e1c]/60 backdrop-blur-xl flex flex-col items-center justify-center shadow-2xl shadow-primary-container/30 dark:shadow-black/30 transition-all ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={{
                 transform: `scale(${isPlaying ? currentPhase.scale : 1})`,
                 transitionDuration: `${isPlaying ? currentPhase.duration : 1200}ms`,
@@ -118,13 +118,13 @@ const ExercisePlayer = () => {
               <span className="text-primary text-[4.5rem] font-light leading-none">
                 {isPlaying ? secondsRemaining : '0'}
               </span>
-              <span className="mt-4 text-sm text-on-surface/55 tracking-wide">
+              <span className="mt-4 text-sm text-on-surface/55 dark:text-[#9caaa7] tracking-wide transition-colors">
                 {isPlaying ? 'Stay with the rhythm' : 'Press start to begin'}
               </span>
             </div>
 
             <div className="text-center max-w-xl">
-              <p className="text-[1.15rem] font-light text-on-surface/80 leading-relaxed">
+              <p className="text-[1.15rem] font-light text-on-surface/80 dark:text-[#e0e8e6] leading-relaxed transition-colors">
                 {isPlaying
                   ? currentPhase.instruction
                   : 'Begin when you are ready and let the circle guide your breath with a gentle, repeating pace.'}
@@ -133,48 +133,48 @@ const ExercisePlayer = () => {
           </div>
         </div>
 
-        <div className="w-full bg-serene-lowest rounded-[3rem] p-10 shadow-[0_20px_40px_-10px_rgba(42,52,53,0.04)]">
+        <div className="w-full bg-serene-lowest dark:bg-[#1b2b28] rounded-[3rem] p-10 shadow-[0_20px_40px_-10px_rgba(42,52,53,0.04)] dark:shadow-black/20 transition-colors">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h2 className="text-[2rem] font-light text-on-surface leading-tight mb-2">Deep Breath Mastery</h2>
-              <p className="text-on-surface/60 font-medium tracking-wide">Calmify Guided Reset</p>
+              <h2 className="text-[2rem] font-light text-on-surface dark:text-[#e0e8e6] leading-tight mb-2 transition-colors">Deep Breath Mastery</h2>
+              <p className="text-on-surface/60 dark:text-[#9caaa7] font-medium tracking-wide transition-colors">Calmify Guided Reset</p>
             </div>
-            <div className="flex gap-6 text-on-surface/40">
-              <button className="hover:text-primary transition-colors"><Volume2 className="w-6 h-6 stroke-[1.5]" /></button>
-              <button className="hover:text-primary transition-colors"><Settings className="w-6 h-6 stroke-[1.5]" /></button>
-              <button className="hover:text-primary transition-colors"><Maximize2 className="w-6 h-6 stroke-[1.5]" /></button>
+            <div className="flex gap-6 text-on-surface/40 dark:text-[#9caaa7]">
+              <button className="hover:text-primary dark:hover:text-[#bcecdf] transition-colors"><Volume2 className="w-6 h-6 stroke-[1.5]" /></button>
+              <button className="hover:text-primary dark:hover:text-[#bcecdf] transition-colors"><Settings className="w-6 h-6 stroke-[1.5]" /></button>
+              <button className="hover:text-primary dark:hover:text-[#bcecdf] transition-colors"><Maximize2 className="w-6 h-6 stroke-[1.5]" /></button>
             </div>
           </div>
 
           <div className="flex items-center gap-6 mb-10">
-            <span className="text-sm font-bold tracking-widest text-primary min-w-16">
+            <span className="text-sm font-bold tracking-widest text-primary dark:text-[#bcecdf] min-w-16 transition-colors">
               {currentPhase.label.replace('...', '')}
             </span>
-            <div className="flex-1 h-3 bg-serene-lower rounded-full overflow-hidden relative">
+            <div className="flex-1 h-3 bg-serene-lower dark:bg-[#121e1c] rounded-full overflow-hidden relative transition-colors">
               <div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-primary-container rounded-full transition-all duration-700 ease-out"
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-primary-container dark:to-[#8dbbab] rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${isPlaying ? cycleProgress : 0}%` }}
               />
             </div>
-            <span className="text-sm font-bold tracking-widest text-on-surface/40 min-w-14 text-right">
+            <span className="text-sm font-bold tracking-widest text-on-surface/40 dark:text-[#9caaa7] min-w-14 text-right transition-colors">
               {secondsRemaining}s
             </span>
           </div>
 
           <div className="flex items-center justify-center gap-12">
-            <button className="p-4 text-on-surface/40 hover:text-primary transition-colors hover:-translate-x-1 duration-300">
+            <button className="p-4 text-on-surface/40 dark:text-[#9caaa7] hover:text-primary dark:hover:text-[#bcecdf] transition-colors hover:-translate-x-1 duration-300">
               <SkipBack className="w-8 h-8 stroke-[1.5]" />
             </button>
             <button
               onClick={handleToggle}
-              className="min-w-52 px-8 py-5 bg-gradient-to-r from-primary to-primary-dim rounded-full flex items-center justify-center gap-4 text-white shadow-[0_20px_40px_-10px_rgba(58,102,92,0.4)] hover:-translate-y-1 transition-all duration-500"
+              className="min-w-52 px-8 py-5 bg-gradient-to-r from-primary to-primary-dim rounded-full flex items-center justify-center gap-4 text-white shadow-[0_20px_40px_-10px_rgba(58,102,92,0.4)] dark:shadow-black/20 hover:-translate-y-1 transition-all duration-500"
             >
               {isPlaying ? <Pause className="w-7 h-7 stroke-[2]" /> : <Play className="w-7 h-7 ml-1 stroke-[2]" />}
               <span className="font-bold tracking-[0.2em] uppercase text-sm">
                 {isPlaying ? 'Stop' : 'Start'}
               </span>
             </button>
-            <button className="p-4 text-on-surface/40 hover:text-primary transition-colors hover:translate-x-1 duration-300">
+            <button className="p-4 text-on-surface/40 dark:text-[#9caaa7] hover:text-primary dark:hover:text-[#bcecdf] transition-colors hover:translate-x-1 duration-300">
               <SkipForward className="w-8 h-8 stroke-[1.5]" />
             </button>
           </div>

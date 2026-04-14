@@ -50,17 +50,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-serene-bg px-4 py-12">
-      <div className="max-w-md w-full space-y-8 bg-serene-lowest p-12 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(42,52,53,0.08)] relative z-10">
+    <div className="min-h-screen flex items-center justify-center bg-serene-bg dark:bg-[#121e1c] px-4 py-12 transition-colors duration-500">
+      <div className="max-w-md w-full space-y-8 bg-serene-lowest dark:bg-[#1b2b28] p-12 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(42,52,53,0.08)] dark:shadow-black/50 relative z-10 transition-colors">
         
         <div className="text-center mb-10">
-          <div className="mx-auto h-20 w-20 bg-gradient-to-br from-primary to-primary-container rounded-[2rem] flex items-center justify-center mb-8 shadow-xl shadow-primary/20">
+          <div className="mx-auto h-20 w-20 bg-gradient-to-br from-primary to-primary-container rounded-[2rem] flex items-center justify-center mb-8 shadow-xl shadow-primary/20 dark:shadow-black/20">
             <span className="text-4xl font-light text-white">C</span>
           </div>
-          <h2 className="text-3xl font-medium tracking-tight text-on-surface">
+          <h2 className="text-3xl font-medium tracking-tight text-on-surface dark:text-[#e0e8e6] transition-colors">
             {isRegisterMode ? 'Create your Calmify account' : 'Welcome back to Calmify'}
           </h2>
-          <p className="mt-3 text-on-surface/60 font-light">
+          <p className="mt-3 text-on-surface/60 dark:text-[#9caaa7] font-light transition-colors">
             {isRegisterMode
               ? 'Start your digital sanctuary for mindfulness.'
               : 'Your digital sanctuary for mindfulness.'}
@@ -79,7 +79,7 @@ const LoginPage = () => {
                   required
                   value={formState.name}
                   onChange={handleChange}
-                  className="appearance-none rounded-full block w-full px-6 py-4 bg-serene-low placeholder-outline-variant text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all font-medium"
+                  className="appearance-none rounded-full block w-full px-6 py-4 bg-serene-low dark:bg-[#121e1c] placeholder-outline-variant dark:placeholder-white/20 text-on-surface dark:text-[#e0e8e6] focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all font-medium"
                   placeholder="Full name"
                 />
               </div>
@@ -118,7 +118,7 @@ const LoginPage = () => {
             </p>
           ) : null}
 
-          <p className="text-sm text-on-surface/60 px-2">
+          <p className="text-sm text-on-surface/60 dark:text-[#9caaa7] px-2 transition-colors">
             {isRegisterMode ? 'Already have an account?' : "Don't have an account yet?"}{' '}
             <Link
               to={isRegisterMode ? '/login' : '/register'}

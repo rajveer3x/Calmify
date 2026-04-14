@@ -108,10 +108,10 @@ const ActiveExercisePlayer = () => {
   };
 
   return (
-    <div className="min-h-full flex flex-col p-8 md:p-12">
+    <div className="min-h-full flex flex-col p-8 md:p-12 transition-colors duration-500">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-primary font-medium hover:text-primary-dim transition-colors w-fit mb-12"
+        className="flex items-center gap-2 text-primary dark:text-[#bcecdf] font-medium hover:text-primary-dim dark:hover:text-white transition-colors w-fit mb-12"
       >
         <ArrowLeft size={20} />
         Back to Library
@@ -119,25 +119,25 @@ const ActiveExercisePlayer = () => {
 
       <div className="flex-1 flex flex-col items-center justify-center max-w-2xl mx-auto w-full">
         {/* Soft abstract visualizer */}
-        <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-primary-container to-serene-low shadow-[0_20px_60px_-15px_rgba(58,102,92,0.3)] mb-12 flex items-center justify-center relative overflow-hidden group">
-          <div className={`absolute inset-0 bg-primary/10 rounded-full transition-transform duration-1000 ease-out ${isPlaying ? 'scale-110' : 'scale-100'}`} />
-          <div className="w-3/4 h-3/4 rounded-full bg-gradient-to-b from-white/40 to-transparent relative z-10 backdrop-blur-sm border border-white/50 shadow-[inset_0_5px_15px_rgba(255,255,255,0.7)]" />
+        <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-primary-container to-serene-low shadow-[0_20px_60px_-15px_rgba(58,102,92,0.3)] dark:shadow-black/20 mb-12 flex items-center justify-center relative overflow-hidden group">
+          <div className={`absolute inset-0 bg-primary/10 dark:bg-white/5 rounded-full transition-transform duration-1000 ease-out ${isPlaying ? 'scale-110' : 'scale-100'}`} />
+          <div className="w-3/4 h-3/4 rounded-full bg-gradient-to-b from-white/40 dark:from-white/10 to-transparent relative z-10 backdrop-blur-sm border border-white/50 dark:border-white/10 shadow-[inset_0_5px_15px_rgba(255,255,255,0.7)] dark:shadow-none" />
         </div>
 
         <div className="text-center mb-10 w-full px-4">
-          <span className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-3 block">
+          <span className="text-sm font-bold tracking-[0.2em] text-primary dark:text-[#bcecdf] uppercase mb-3 block transition-colors">
             {resource.category}
           </span>
-          <h1 className="text-3xl md:text-4xl font-light text-on-surface mb-2 truncate">
+          <h1 className="text-3xl md:text-4xl font-light text-on-surface dark:text-[#e0e8e6] mb-2 truncate transition-colors">
             {resource.title}
           </h1>
-          <p className="text-on-surface/60 font-medium">
+          <p className="text-on-surface/60 dark:text-[#9caaa7] font-medium transition-colors">
             Focus & Relax
           </p>
         </div>
 
         {/* Player Controls UI */}
-        <div className="w-full bg-serene-lowest rounded-[2.5rem] p-8 shadow-[0_20px_40px_-5px_rgba(42,52,53,0.05)] border border-outline-variant/10">
+        <div className="w-full bg-serene-lowest dark:bg-[#1b2b28] rounded-[2.5rem] p-8 shadow-[0_20px_40px_-5px_rgba(42,52,53,0.05)] dark:shadow-black/20 border border-outline-variant/10 dark:border-white/5 transition-colors duration-500">
           
           <audio 
             ref={audioRef}
@@ -150,7 +150,7 @@ const ActiveExercisePlayer = () => {
 
           {/* Timeline Scrubber */}
           <div className="mb-8">
-            <div className="flex justify-between text-sm font-medium text-on-surface/50 mb-3 px-1">
+            <div className="flex justify-between text-sm font-medium text-on-surface/50 dark:text-[#9caaa7] mb-3 px-1 transition-colors">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(duration)}</span>
             </div>
@@ -164,9 +164,9 @@ const ActiveExercisePlayer = () => {
                 onChange={handleScrubberChange}
                 className="w-full absolute z-20 opacity-0 cursor-pointer h-full"
               />
-              <div className="w-full h-1.5 bg-serene-lower rounded-full relative z-10 overflow-hidden">
+              <div className="w-full h-1.5 bg-serene-lower dark:bg-[#121e1c] rounded-full relative z-10 overflow-hidden transition-colors">
                 <div 
-                  className="absolute top-0 left-0 h-full bg-primary transition-all shadow-[0_0_10px_rgba(58,102,92,0.5)]"
+                  className="absolute top-0 left-0 h-full bg-primary dark:bg-[#8dbbab] transition-all shadow-[0_0_10px_rgba(58,102,92,0.5)] dark:shadow-[0_0_10px_rgba(188,236,223,0.5)]"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -178,7 +178,7 @@ const ActiveExercisePlayer = () => {
             <div className="flex items-center gap-3 w-1/3">
               <button 
                 onClick={toggleMute}
-                className="text-on-surface/50 hover:text-primary transition-colors h-10 w-10 flex items-center justify-center rounded-full hover:bg-serene-lower"
+                className="text-on-surface/50 dark:text-[#9caaa7] hover:text-primary dark:hover:text-[#e0e8e6] transition-colors h-10 w-10 flex items-center justify-center rounded-full hover:bg-serene-lower dark:hover:bg-[#121e1c]"
               >
                 {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
               </button>
@@ -193,9 +193,9 @@ const ActiveExercisePlayer = () => {
                   onChange={handleVolumeChange}
                   className="w-full absolute z-20 opacity-0 cursor-pointer h-full"
                 />
-                <div className="w-full h-1 bg-serene-lower rounded-full relative z-10 overflow-hidden">
+                <div className="w-full h-1 bg-serene-lower dark:bg-[#121e1c] rounded-full relative z-10 overflow-hidden transition-colors">
                   <div 
-                    className="absolute top-0 left-0 h-full bg-primary transition-all"
+                    className="absolute top-0 left-0 h-full bg-primary dark:bg-[#8dbbab] transition-all"
                     style={{ width: `${volume * 100}%` }}
                   />
                 </div>

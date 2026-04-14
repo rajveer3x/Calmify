@@ -58,21 +58,21 @@ const InteractiveBreathingTool = () => {
   };
 
   return (
-    <div className="min-h-full flex flex-col items-center justify-center p-8">
+    <div className="min-h-full flex flex-col items-center justify-center p-8 transition-colors duration-500">
       <div className="text-center mb-16 max-w-lg">
-        <h1 className="text-4xl font-light text-on-surface mb-4">4-7-8 Breathing</h1>
-        <p className="text-on-surface/60 text-lg leading-relaxed">
+        <h1 className="text-4xl font-light text-on-surface dark:text-[#e0e8e6] mb-4 transition-colors">4-7-8 Breathing</h1>
+        <p className="text-on-surface/60 dark:text-[#9caaa7] text-lg leading-relaxed transition-colors">
           A natural tranquilizer for the nervous system. Follow the circle to find your center.
         </p>
       </div>
 
       <div className="relative w-80 h-80 flex items-center justify-center mb-16">
         {/* Pulsing background rings */}
-        <div className={`absolute inset-0 bg-primary/5 rounded-full transition-all ease-in-out ${getScaleClass()}`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }} />
-        <div className={`absolute inset-4 bg-primary/10 rounded-full transition-all ease-in-out ${getScaleClass()} delay-75`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }} />
+        <div className={`absolute inset-0 bg-primary/5 dark:bg-[#bcecdf]/5 rounded-full transition-all ease-in-out ${getScaleClass()}`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }} />
+        <div className={`absolute inset-4 bg-primary/10 dark:bg-[#bcecdf]/10 rounded-full transition-all ease-in-out ${getScaleClass()} delay-75`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }} />
         
         {/* Main breathing circle */}
-        <div className={`relative z-10 w-48 h-48 bg-gradient-to-br from-primary to-primary-dim rounded-full shadow-[0_20px_40px_-5px_rgba(58,102,92,0.3)] flex items-center justify-center transition-all ease-in-out ${getScaleClass()}`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }}>
+        <div className={`relative z-10 w-48 h-48 bg-gradient-to-br from-primary to-primary-dim dark:to-[#8dbbab] rounded-full shadow-[0_20px_40px_-5px_rgba(58,102,92,0.3)] dark:shadow-[0_20px_40px_-5px_rgba(188,236,223,0.15)] flex items-center justify-center transition-all ease-in-out ${getScaleClass()}`} style={{ transitionDuration: getTransitionDuration(), transformOrigin: 'center' }}>
           <span className="text-white text-2xl font-light tracking-wider">
             {phase}
           </span>
@@ -81,7 +81,7 @@ const InteractiveBreathingTool = () => {
 
       <button
         onClick={() => setIsActive(!isActive)}
-        className="flex items-center gap-3 px-8 py-4 bg-serene-lowest border border-primary/20 text-primary rounded-full font-bold uppercase tracking-widest hover:bg-primary/5 transition-all shadow-sm"
+        className="flex items-center gap-3 px-8 py-4 bg-serene-lowest dark:bg-[#1b2b28] border border-primary/20 dark:border-white/5 text-primary dark:text-[#bcecdf] rounded-full font-bold uppercase tracking-widest hover:bg-primary/5 dark:hover:bg-[#121e1c] transition-colors duration-300 shadow-sm"
       >
         {isActive ? (
           <>

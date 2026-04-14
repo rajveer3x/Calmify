@@ -11,11 +11,12 @@ import ProfileSettings from './pages/ProfileSettings'
 import ChatCompanion from './pages/ChatCompanion'
 import Sidebar from './components/Sidebar'
 import { useCalmify } from './context/CalmifyContext'
+import { ThemeProvider } from './context/ThemeContext'
 import './App.css'
 
 const MainLayout = () => {
   return (
-    <div className="flex bg-serene-bg min-h-screen">
+    <div className="flex flex-col md:flex-row bg-serene-bg dark:bg-[#121e1c] min-h-screen transition-colors duration-500">
       <Sidebar />
       <div className="flex-1 max-h-screen overflow-y-auto">
         <Outlet />
@@ -29,7 +30,7 @@ const ProtectedRoute = () => {
 
   if (isBootstrapping) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-serene-bg text-on-surface/70">
+      <div className="min-h-screen flex items-center justify-center bg-serene-bg dark:bg-[#121e1c] text-on-surface/70 dark:text-[#9caaa7] transition-colors duration-500">
         Restoring your sanctuary...
       </div>
     )
@@ -43,7 +44,7 @@ const PublicRoute = () => {
 
   if (isBootstrapping) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-serene-bg text-on-surface/70">
+      <div className="min-h-screen flex items-center justify-center bg-serene-bg dark:bg-[#121e1c] text-on-surface/70 dark:text-[#9caaa7] transition-colors duration-500">
         Restoring your sanctuary...
       </div>
     )
@@ -74,8 +75,9 @@ const OnboardingRoute = () => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <ThemeProvider>
+      <Router>
+        <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<LoginPage />} />
@@ -103,6 +105,7 @@ function App() {
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   )
 }
 

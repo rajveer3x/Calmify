@@ -87,7 +87,7 @@ const ProgressJournal = () => {
 
   return (
     <main className="w-full p-8 md:p-12 overflow-y-auto">
-      <h1 className="text-[3rem] font-light text-on-surface mb-12 pl-4">Progress & Reflection</h1>
+      <h1 className="text-[3rem] font-light text-on-surface dark:text-[#e0e8e6] mb-12 pl-4 transition-colors">Progress & Reflection</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -117,8 +117,8 @@ const ProgressJournal = () => {
           </div>
 
           {/* Mood History Chart */}
-          <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 flex-1 flex flex-col min-h-[300px]">
-            <h3 className="text-xl font-medium text-gray-800 mb-8 px-2">Mood Journey</h3>
+          <div className="bg-white dark:bg-[#1b2b28] p-8 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 flex-1 flex flex-col min-h-[300px] transition-colors">
+            <h3 className="text-xl font-medium text-gray-800 dark:text-[#e0e8e6] mb-8 px-2 transition-colors">Mood Journey</h3>
             
             <div className="flex-1 w-full h-full relative -ml-4">
               {isLoading ? (
@@ -169,30 +169,30 @@ const ProgressJournal = () => {
 
         {/* Right Column: Journal Form */}
         <div className="lg:col-span-2">
-           <div className="bg-white p-10 md:p-12 rounded-[2.5rem] shadow-sm border border-gray-100 h-full flex flex-col relative overflow-hidden">
+           <div className="bg-white dark:bg-[#1b2b28] p-10 md:p-12 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 h-full flex flex-col relative overflow-hidden transition-colors">
              
              {/* Soft gradient corner */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-[#3a665c]/5 rounded-bl-full blur-[80px] pointer-events-none" />
              
              <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-10 relative z-10 gap-4">
-               <h3 className="text-[2.5rem] font-light text-gray-800">Daily Reflection</h3>
-               <span className="text-sm font-medium tracking-widest uppercase text-gray-500 bg-gray-50 px-4 py-2 rounded-full w-fit">
+               <h3 className="text-[2.5rem] font-light text-gray-800 dark:text-[#e0e8e6] transition-colors">Daily Reflection</h3>
+               <span className="text-sm font-medium tracking-widest uppercase text-gray-500 dark:text-[#9caaa7] bg-gray-50 dark:bg-[#121e1c] px-4 py-2 rounded-full w-fit transition-colors">
                  {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                </span>
              </div>
              
-             <div className="bg-[#f8fafa] p-8 rounded-[2.5rem] mb-8 relative z-10">
-               <h4 className="font-bold text-sm tracking-widest uppercase text-gray-500 mb-3 flex items-center gap-3">
-                 <PenTool className="w-5 h-5 stroke-[2] text-[#3a665c]" /> PROMPT OF THE DAY
+             <div className="bg-[#f8fafa] dark:bg-[#121e1c] p-8 rounded-[2.5rem] mb-8 relative z-10 transition-colors">
+               <h4 className="font-bold text-sm tracking-widest uppercase text-gray-500 dark:text-[#9caaa7] mb-3 flex items-center gap-3 transition-colors">
+                 <PenTool className="w-5 h-5 stroke-[2] text-[#3a665c] dark:text-[#bcecdf]" /> PROMPT OF THE DAY
                </h4>
-               <p className="text-xl text-on-surface font-light leading-relaxed">
+               <p className="text-xl text-on-surface dark:text-[#e0e8e6] font-light leading-relaxed transition-colors">
                  What is one thing that brought you peace today, no matter how small?
                </p>
              </div>
 
              {/* Mood Selector */}
-             <div className="mb-8 relative z-10 px-2 flex flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-full border border-gray-100">
-                <span className="text-sm font-bold uppercase tracking-widest text-gray-500 ml-4 hidden sm:block">
+             <div className="mb-8 relative z-10 px-2 flex flex-wrap gap-4 items-center justify-between bg-white dark:bg-[#1b2b28] p-4 rounded-full border border-gray-100 dark:border-white/5 transition-colors">
+                <span className="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-[#9caaa7] ml-4 hidden sm:block">
                   CURRENT MOOD
                 </span>
                 <div className="flex gap-2">
@@ -202,8 +202,8 @@ const ProgressJournal = () => {
                       onClick={() => setScore(m.value)}
                       className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all duration-300 ${
                         score === m.value 
-                          ? 'bg-[#3a665c] text-white scale-110 shadow-md' 
-                          : 'hover:bg-gray-50 bg-transparent opacity-60 hover:opacity-100 hover:scale-105'
+                          ? 'bg-[#3a665c] text-white scale-110 shadow-md dark:shadow-black/20' 
+                          : 'hover:bg-gray-50 dark:hover:bg-white/5 bg-transparent opacity-60 hover:opacity-100 hover:scale-105'
                       }`}
                       title={m.label}
                     >
@@ -216,7 +216,7 @@ const ProgressJournal = () => {
              <textarea 
                value={entry}
                onChange={(e) => setEntry(e.target.value)}
-               className="flex-1 w-full min-h-[200px] bg-white rounded-2xl border border-gray-200 p-8 resize-none outline-none focus:ring-2 focus:ring-[#3a665c]/20 text-gray-800 placeholder-gray-400 text-lg leading-loose transition-all duration-300 relative z-10"
+               className="flex-1 w-full min-h-[200px] bg-white dark:bg-[#121e1c] rounded-2xl border border-gray-200 dark:border-white/5 p-8 resize-none outline-none focus:ring-2 focus:ring-[#3a665c]/20 text-gray-800 dark:text-[#e0e8e6] placeholder-gray-400 dark:placeholder-white/20 text-lg leading-loose transition-all duration-300 relative z-10"
                placeholder="Start writing your thoughts here..."
              />
 
