@@ -92,7 +92,7 @@ const ProgressJournal = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Left Column: Stats & Chart */}
-        <div className="lg:col-span-1 space-y-8 flex flex-col h-full">
+        <div className="lg:col-span-1 space-y-8 flex flex-col">
           
           {/* Current Streak */}
           <div className="bg-[#3a665c] text-white p-10 rounded-[2.5rem] shadow-sm relative overflow-hidden shrink-0">
@@ -117,10 +117,10 @@ const ProgressJournal = () => {
           </div>
 
           {/* Mood History Chart */}
-          <div className="bg-white dark:bg-[#1b2b28] p-8 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 flex-1 flex flex-col min-h-[300px] transition-colors">
+          <div className="bg-white dark:bg-[#1b2b28] p-8 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 flex flex-col h-[350px] transition-colors">
             <h3 className="text-xl font-medium text-gray-800 dark:text-[#e0e8e6] mb-8 px-2 transition-colors">Mood Journey</h3>
             
-            <div className="flex-1 w-full h-full relative -ml-4">
+            <div className="w-full min-h-[250px] relative -ml-4">
               {isLoading ? (
                 <div className="absolute inset-0 flex items-center justify-center text-on-surface/40">
                   Loading journey...
@@ -169,7 +169,7 @@ const ProgressJournal = () => {
 
         {/* Right Column: Journal Form */}
         <div className="lg:col-span-2">
-           <div className="bg-white dark:bg-[#1b2b28] p-10 md:p-12 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 h-full flex flex-col relative overflow-hidden transition-colors">
+           <div className="bg-white dark:bg-[#1b2b28] p-10 md:p-12 rounded-[2.5rem] shadow-sm border border-gray-100 dark:border-white/5 flex flex-col relative overflow-hidden transition-colors">
              
              {/* Soft gradient corner */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-[#3a665c]/5 rounded-bl-full blur-[80px] pointer-events-none" />
@@ -216,7 +216,7 @@ const ProgressJournal = () => {
              <textarea 
                value={entry}
                onChange={(e) => setEntry(e.target.value)}
-               className="flex-1 w-full min-h-[200px] bg-white dark:bg-[#121e1c] rounded-2xl border border-gray-200 dark:border-white/5 p-8 resize-none outline-none focus:ring-2 focus:ring-[#3a665c]/20 text-gray-800 dark:text-[#e0e8e6] placeholder-gray-400 dark:placeholder-white/20 text-lg leading-loose transition-all duration-300 relative z-10"
+               className="w-full h-[250px] bg-white dark:bg-[#121e1c] rounded-2xl border border-gray-200 dark:border-white/5 p-8 resize-none outline-none focus:ring-2 focus:ring-[#3a665c]/20 text-gray-800 dark:text-[#e0e8e6] placeholder-gray-400 dark:placeholder-white/20 text-lg leading-loose transition-all duration-300 relative z-10"
                placeholder="Start writing your thoughts here..."
              />
 
@@ -246,6 +246,31 @@ const ProgressJournal = () => {
                </button>
              </div>
              
+           </div>
+
+           {/* Previous Reflections Section */}
+           <div className="mt-12">
+             <h3 className="text-xl font-medium text-gray-800 dark:text-[#e0e8e6] mb-6 px-2 transition-colors">Previous Reflections</h3>
+             <div className="space-y-4">
+               {history.length > 0 ? (
+                 history.filter(log => log.entry).map((log) => {
+                   const moodEmoji = moods.find(m => m.value === log.score)?.emoji || '😐';
+                   return (
+                     <div key={log._id} className="bg-white dark:bg-[#1b2b28] p-6 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm transition-colors">
+                       <div className="flex items-center gap-4 mb-3">
+                         <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-[#121e1c] flex items-center justify-center text-xl shadow-inner dark:shadow-black/20 border border-transparent dark:border-white/5">
+                           {moodEmoji}
+                         </div>
+                         <span className="text-sm font-bold uppercase tracking-widest text-[#3a665c] dark:text-[#bcecdf] opacity-90">{log.formattedDate}</span>
+                       </div>
+                       <p className="text-gray-700 dark:text-[#e0e8e6] leading-relaxed font-light pl-1">{log.entry}</p>
+                     </div>
+                   );
+                 })
+               ) : (
+                 <div className="text-gray-500 dark:text-[#9caaa7] text-sm px-2">No past reflections yet. Start by writing one above!</div>
+               )}
+             </div>
            </div>
         </div>
       </div>

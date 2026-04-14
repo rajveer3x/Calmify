@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ResourceCard from '../components/ResourceCard';
 import { useCalmify } from '../context/CalmifyContext';
 import { Calendar, Flame } from 'lucide-react';
+import api from '../lib/api';
 
 const Dashboard = () => {
   const { currentUser, recommendedResources, isLoadingResources } = useCalmify();
+  const [stats, setStats] = useState({ trackingBetterThanPercent: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await api.get('/users/stats');
+        setStats(data);
+      } catch (error) {
+        console.error('Failed to load stats', error);
+      }
+    };
+    fetchStats();
+  }, []);
 
   return (
     <main className="w-full p-[4rem]">
@@ -60,7 +74,7 @@ const Dashboard = () => {
 
         <section className="mt-20 relative bg-gradient-to-r from-primary to-primary-dim rounded-[3rem] p-12 text-white overflow-hidden shadow-2xl shadow-primary/20">
           <div className="relative z-10 max-w-2xl">
-            <h3 className="text-[2rem] font-light mb-4 tracking-wide leading-tight">You're tracking better than 85% of users!</h3>
+            <h3 className="text-[2rem] font-light mb-4 tracking-wide leading-tight">You're tracking better than {stats.trackingBetterThanPercent}% of users!</h3>
             <p className="opacity-90 text-lg font-light leading-relaxed">Keep the momentum going. Consistency is the key to building lasting mental resilience.</p>
           </div>
           {/* Decorative glowing sphere */}
