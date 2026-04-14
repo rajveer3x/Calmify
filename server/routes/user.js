@@ -34,4 +34,31 @@ router.post('/onboarding', auth, async (req, res) => {
   }
 });
 
+router.get('/stats', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    const totalUsers = await User.countDocuments();
+    const usersWithLowerStreak = await User.countDocuments({ currentStreak: { $lt: user.currentStreak } });
+    
+    let trackingBetterThanPercent = 0;
+    if (totalUsers > 1) {
+      trackingBetterThanPercent = Math.round((usersWithLowerStreak / totalUsers) * 100);
+    } else if (totalUsers === 1 && user.currentStreak > 0) {
+      // If it's the only user, give them some positive reinforcement if they have a streak
+      trackingBetterThanPercent = 100;
+    }
+    
+    res.status(200).json({ 
+      currentStreak: user.currentStreak, 
+      trackingBetterThanPercent 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to generate stats' });
+  }
+});
+
 module.exports = router;
