@@ -7,12 +7,15 @@ import { Search, Filter } from 'lucide-react';
 const ResourceLibrary = () => {
   const { recommendedResources, isLoadingResources } = useCalmify();
   const [activeCategory, setActiveCategory] = useState('All Categories');
+  const [searchQuery, setSearchQuery] = useState('');
   
   const allResources = recommendedResources;
-  const filteredResources = allResources.filter(r => 
-    activeCategory === 'All Categories' || 
-    r.category?.toUpperCase() === activeCategory.toUpperCase()
-  );
+  const filteredResources = allResources.filter(r => {
+    const matchesCategory = activeCategory === 'All Categories' || r.category?.toUpperCase() === activeCategory.toUpperCase();
+    const matchesSearch = (r.title || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          (r.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <main className="w-full p-[4rem]">
@@ -25,6 +28,8 @@ const ResourceLibrary = () => {
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-on-surface/40 dark:text-[#9caaa7] w-6 h-6 stroke-[1.5]" />
             <input 
               type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search meditations, exercises, sounds..." 
               className="w-full bg-serene-lowest dark:bg-[#1b2b28] rounded-[2rem] py-6 pl-16 pr-6 shadow-[0_20px_40px_-5px_rgba(42,52,53,0.03)] outline-none focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-[#e0e8e6] placeholder-on-surface/40 dark:placeholder-[#9caaa7] text-lg transition-all"
             />
