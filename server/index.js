@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -15,6 +16,7 @@ const chatRoutes = require('./routes/chat');
 
 app.use(cors());
 app.use(express.json());
+app.use('/media', express.static(path.join(__dirname, 'public/media')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ResourceCard from '../components/ResourceCard';
 import { useCalmify } from '../context/CalmifyContext';
@@ -6,7 +6,13 @@ import { Search, Filter } from 'lucide-react';
 
 const ResourceLibrary = () => {
   const { recommendedResources, isLoadingResources } = useCalmify();
+  const [activeCategory, setActiveCategory] = useState('All Categories');
+  
   const allResources = recommendedResources;
+  const filteredResources = allResources.filter(r => 
+    activeCategory === 'All Categories' || 
+    r.category?.toUpperCase() === activeCategory.toUpperCase()
+  );
 
   return (
     <main className="w-full p-[4rem]">
@@ -30,7 +36,11 @@ const ResourceLibrary = () => {
 
         <div className="flex gap-4 mb-16 overflow-x-auto pb-4 pl-2">
           {['All Categories', 'Mindfulness', 'Sleep', 'Focus', 'Breathing'].map((cat, i) => (
-            <button key={cat} className={`px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs whitespace-nowrap transition-all duration-300 ${i === 0 ? 'bg-primary dark:bg-[#3a665c] text-white shadow-lg shadow-primary/20 dark:shadow-black/20 hover:-translate-y-0.5' : 'bg-serene-lowest dark:bg-[#1b2b28] text-on-surface/60 dark:text-[#9caaa7] hover:bg-serene-low dark:hover:bg-[#121e1c] hover:text-on-surface dark:hover:text-[#e0e8e6]'}`}>
+            <button 
+              key={cat} 
+              onClick={() => setActiveCategory(cat)}
+              className={`px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs whitespace-nowrap transition-all duration-300 ${activeCategory === cat ? 'bg-primary dark:bg-[#3a665c] text-white shadow-lg shadow-primary/20 dark:shadow-black/20 hover:-translate-y-0.5' : 'bg-serene-lowest dark:bg-[#1b2b28] text-on-surface/60 dark:text-[#9caaa7] hover:bg-serene-low dark:hover:bg-[#121e1c] hover:text-on-surface dark:hover:text-[#e0e8e6]'}`}
+            >
               {cat}
             </button>
           ))}
@@ -41,7 +51,7 @@ const ResourceLibrary = () => {
             <div className="col-span-full rounded-[2rem] bg-serene-lowest dark:bg-[#1b2b28] p-8 text-on-surface/60 dark:text-[#9caaa7] transition-colors">
               Loading resource library...
             </div>
-          ) : allResources.length > 0 ? allResources.map((resource) => (
+          ) : filteredResources.length > 0 ? filteredResources.map((resource) => (
             <ResourceCard key={resource.id} resource={resource} />
           )) : (
             <div className="col-span-full rounded-[2rem] bg-serene-lowest dark:bg-[#1b2b28] p-8 text-on-surface/60 dark:text-[#9caaa7] transition-colors">

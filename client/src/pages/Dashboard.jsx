@@ -62,7 +62,7 @@ const Dashboard = () => {
               <div className="col-span-full rounded-[2rem] bg-serene-lowest dark:bg-[#1b2b28] p-8 text-on-surface/60 dark:text-[#9caaa7] transition-colors">
                 Loading your recommended exercises...
               </div>
-            ) : recommendedResources.length > 0 ? recommendedResources.map((resource) => (
+            ) : recommendedResources.length > 0 ? recommendedResources.slice(0, 3).map((resource) => (
               <ResourceCard key={resource.id} resource={resource} />
             )) : (
               <div className="col-span-full rounded-[2rem] bg-serene-lowest dark:bg-[#1b2b28] p-8 text-on-surface/60 dark:text-[#9caaa7] transition-colors">

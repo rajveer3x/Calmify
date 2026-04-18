@@ -5,10 +5,16 @@ const resourceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+  },
   type: {
     type: String,
-    enum: ['audio', 'video', 'text'],
+    enum: ['audio', 'video', 'text', 'AUDIO', 'VIDEO', 'TEXT'],
     required: true,
+  },
+  mediaUrl: {
+    type: String,
   },
   duration: {
     type: String,
