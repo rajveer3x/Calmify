@@ -138,6 +138,8 @@ const ActiveExercisePlayer = () => {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  console.log("Current media URL:", resource?.mediaUrl);
+
   return (
     <div className="min-h-full flex flex-col p-8 md:p-12 transition-colors duration-500">
       <button
@@ -172,7 +174,12 @@ const ActiveExercisePlayer = () => {
                 Focus & Relax
               </p>
             </div>
-            <video src={resource?.mediaUrl} controls className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-[2.5rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
+            
+            {!resource?.mediaUrl ? (
+              <div className="text-gray-400 py-10 text-center animate-pulse">Loading media...</div>
+            ) : (
+              <video src={resource.mediaUrl} controls className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-[2.5rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
+            )}
           </>
         ) : (
           <>
@@ -197,14 +204,18 @@ const ActiveExercisePlayer = () => {
             {/* Player Controls UI */}
             <div className="w-full bg-serene-lowest dark:bg-[#1b2b28] rounded-[2.5rem] p-8 shadow-[0_20px_40px_-5px_rgba(42,52,53,0.05)] dark:shadow-black/20 border border-outline-variant/10 dark:border-white/5 transition-colors duration-500">
 
-              <audio
-                ref={audioRef}
-                src={audioUrl}
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onEnded={() => setIsPlaying(false)}
-                className="hidden"
-              />
+              {!resource?.mediaUrl ? (
+                <div className="text-gray-400 py-4 text-center animate-pulse">Loading media...</div>
+              ) : (
+                <audio
+                  ref={audioRef}
+                  src={resource.mediaUrl}
+                  onTimeUpdate={handleTimeUpdate}
+                  onLoadedMetadata={handleLoadedMetadata}
+                  onEnded={() => setIsPlaying(false)}
+                  className="hidden"
+                />
+              )}
 
               {/* Timeline Scrubber */}
               <div className="mb-8">
