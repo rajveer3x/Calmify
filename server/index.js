@@ -14,7 +14,9 @@ const resourceRoutes = require('./routes/resource');
 const logRoutes = require('./routes/log');
 const chatRoutes = require('./routes/chat');
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", /\.vercel\.app$/]
+}));
 app.use(express.json());
 app.use('/media', express.static(path.join(__dirname, 'public/media')));
 
@@ -27,6 +29,8 @@ app.use('/api/chat', chatRoutes);
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Successfully connected to MongoDB.'))
   .catch((err) => console.error('MongoDB connection error:', err));
+
+app.get('/', (req, res) => res.send('Calmify API is running...'));
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Calmify API is running smoothly' });
