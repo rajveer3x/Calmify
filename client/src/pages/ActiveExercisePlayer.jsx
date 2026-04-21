@@ -2,18 +2,49 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Play, Pause, Volume2, ArrowLeft, VolumeX } from 'lucide-react';
 import { useCalmify } from '../context/CalmifyContext';
+import api from '../lib/api';
 
 const ActiveExercisePlayer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { recommendedResources } = useCalmify();
 
-  // Find the resource if it exists, otherwise provide a fallback for direct visits
-  const resource = recommendedResources?.find(r => r.id === id || r._id === id) || {
-    title: 'Ambient Relaxation',
-    category: 'Meditation',
-    duration: '5 MIN'
-  };
+  const [resource, setResource] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchResource = async () => {
+      try {
+        setIsLoading(true);
+        // Look in recommended first to avoid unnecessary fetch
+        const found = recommendedResources?.find(r => r?.id === id || r?._id === id);
+        if (found) {
+          if (isMounted) setResource(found);
+          return;
+        }
+
+        // Fetch resource single data
+        const response = await api.get(`/resources/${id}`);
+        
+        // Correctly extract mapping payload or fallback
+        const fetchedData = response?.data?.payload || response?.data;
+        
+        if (isMounted && fetchedData) {
+          setResource(fetchedData);
+        }
+      } catch (error) {
+        console.error('Failed to load resource data.', error);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+    fetchResource();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [id, recommendedResources]);
 
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,7 +55,7 @@ const ActiveExercisePlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   // Dynamic resource audio or fallback
-  const audioUrl = resource.mediaUrl || 'https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=ambient-piano-amp-strings-10711.mp3';
+  const audioUrl = resource?.mediaUrl || 'https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=ambient-piano-amp-strings-10711.mp3';
 
   useEffect(() => {
     if (audioRef.current) {
@@ -118,20 +149,30 @@ const ActiveExercisePlayer = () => {
       </button>
 
       <div className="flex-1 flex flex-col items-center justify-center max-w-2xl mx-auto w-full">
-        {resource.type === 'VIDEO' ? (
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center text-on-surface/60 dark:text-[#9caaa7] transition-colors py-20">
+            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-6"></div>
+            <p className="text-xl font-light">Preparing your serene space...</p>
+          </div>
+        ) : !resource ? (
+          <div className="text-center text-on-surface/60 dark:text-[#9caaa7] transition-colors py-20">
+            <p className="text-2xl font-light mb-4">Resource Not Found</p>
+            <p className="text-sm">The content you are looking for is unavailable.</p>
+          </div>
+        ) : resource.type === 'VIDEO' ? (
           <>
             <div className="text-center mb-10 w-full px-4">
               <span className="text-sm font-bold tracking-[0.2em] text-primary dark:text-[#bcecdf] uppercase mb-3 block transition-colors">
                 {resource.category}
               </span>
               <h1 className="text-3xl md:text-4xl font-light text-on-surface dark:text-[#e0e8e6] mb-2 truncate transition-colors">
-                {resource.title}
+                {resource?.title}
               </h1>
               <p className="text-on-surface/60 dark:text-[#9caaa7] font-medium transition-colors">
                 Focus & Relax
               </p>
             </div>
-            <video src={resource.mediaUrl} controls className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-3xl shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
+            <video src={resource?.mediaUrl} controls className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-[2.5rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
           </>
         ) : (
           <>

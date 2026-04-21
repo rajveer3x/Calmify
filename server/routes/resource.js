@@ -15,4 +15,17 @@ router.get('/recommended', auth, async (req, res) => {
   }
 });
 
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+    // Returning under a payload wrapper just in case the client expects it based on user description
+    res.status(200).json({ payload: resource });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching resource' });
+  }
+});
+
 module.exports = router;
