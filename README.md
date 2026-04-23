@@ -80,7 +80,8 @@ Bash
 cd server
 node seed.js
 👨‍💻 Author
-Rajveer Singh
+Rajveer Singh 
+Shagun Batham
 Full-Stack Developer | Lovely Professional University
 
 
