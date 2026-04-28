@@ -7,6 +7,7 @@
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
 
 ## 📖 Overview
 Calmify was built to address the lack of personalization and sustained engagement in modern mental health applications. By leveraging the MERN stack and the Google Gemini API, Calmify dynamically adapts to a user's specific stressors, provides real-time interactive mindfulness tools, and offers a secure space for daily reflection. 
