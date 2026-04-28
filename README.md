@@ -79,6 +79,8 @@ Ensure you have placed your .mp4 and .mp3 media files inside server/public/media
 Bash
 cd server
 node seed.js
+
+Rajveer Singh
 Full-Stack Developer | Lovely Professional University
 
 
