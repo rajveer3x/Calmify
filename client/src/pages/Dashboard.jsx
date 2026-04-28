@@ -41,7 +41,7 @@ const Dashboard = () => {
               </div>
               <div className="flex flex-col items-center justify-center bg-primary-container/20 dark:bg-[#121e1c] w-24 h-24 rounded-[2rem] text-primary dark:text-[#bcecdf] border border-transparent dark:border-white/5 shadow-[0_10px_30px_-10px_rgba(42,52,53,0.05)] transition-colors">
                 <Calendar className="w-8 h-8 mb-2 stroke-[1.5]" />
-                <span className="font-bold text-lg">24</span>
+                <span className="font-bold text-lg">{new Date().getDate()}</span>
               </div>
             </div>
           </div>
