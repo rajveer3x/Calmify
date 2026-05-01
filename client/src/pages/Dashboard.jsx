@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import ResourceCard from '../components/ResourceCard';
 import { useCalmify } from '../context/CalmifyContext';
@@ -52,9 +53,9 @@ const Dashboard = () => {
             <h3 className="text-2xl font-medium text-on-surface dark:text-[#e0e8e6] tracking-wide">
               Recommended for Today
             </h3>
-            <button className="text-primary dark:text-[#bcecdf] font-bold tracking-widest uppercase text-xs hover:text-primary-dim transition-colors">
+            <Link to="/exercises" className="text-primary dark:text-[#bcecdf] font-bold tracking-widest uppercase text-xs hover:text-primary-dim transition-colors cursor-pointer">
               Explore All
-            </button>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
