@@ -46,7 +46,7 @@ const ProfileSettings = () => {
           <div className="bg-[#bcecdf] dark:bg-[#1b2b28] border dark:border-white/5 rounded-[2rem] p-8 shadow-sm text-center relative overflow-hidden transition-colors">
             <div className="absolute top-0 right-0 w-24 h-24 bg-white/30 dark:bg-primary-container/10 rounded-bl-full blur-[20px]" />
             <Clock className="w-8 h-8 text-[#3a665c] dark:text-[#bcecdf] mx-auto mb-4 transition-colors" />
-            <span className="block text-5xl font-light text-[#3a665c] dark:text-[#e0e8e6] mb-2 transition-colors">124</span> {/* Placeholder for total minutes */}
+            <span className="block text-5xl font-light text-[#3a665c] dark:text-[#e0e8e6] mb-2 transition-colors">{currentUser?.totalMindfulMinutes || 0}</span>
             <span className="text-[#3a665c]/80 dark:text-[#9caaa7] font-bold uppercase tracking-widest text-sm transition-colors">Mindful Minutes</span>
           </div>
 

@@ -108,6 +108,16 @@ export const CalmifyProvider = ({ children }) => {
     return data;
   };
 
+  const updateMindfulMinutes = async (minutes) => {
+    try {
+      const { data } = await api.put('/users/minutes', { minutes });
+      setCurrentUser(data);
+      return data;
+    } catch (error) {
+      console.error('Failed to update mindful minutes', error);
+    }
+  };
+
   const logout = () => {
     clearSession();
     setAuthError('');
@@ -126,6 +136,7 @@ export const CalmifyProvider = ({ children }) => {
     logout,
     register,
     recommendedResources,
+    updateMindfulMinutes,
   };
 
   return <CalmifyContext.Provider value={value}>{children}</CalmifyContext.Provider>;

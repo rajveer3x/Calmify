@@ -7,7 +7,7 @@ import api from '../lib/api';
 const ActiveExercisePlayer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { recommendedResources } = useCalmify();
+  const { recommendedResources, updateMindfulMinutes } = useCalmify();
 
   const [resource, setResource] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,6 +100,14 @@ const ActiveExercisePlayer = () => {
     }
   };
 
+  const handleMediaEnded = () => {
+    setIsPlaying(false);
+    if (duration > 0) {
+      const minutes = Math.ceil(duration / 60);
+      updateMindfulMinutes(minutes);
+    }
+  };
+
   const handleScrubberChange = (e) => {
     const value = parseFloat(e.target.value);
     if (audioRef.current && duration) {
@@ -178,7 +186,7 @@ const ActiveExercisePlayer = () => {
             {!resource?.mediaUrl ? (
               <div className="text-gray-400 py-10 text-center animate-pulse">Loading media...</div>
             ) : (
-              <video src={resource.mediaUrl} controls className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-[2.5rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
+              <video src={resource.mediaUrl} controls onEnded={handleMediaEnded} className="w-full max-w-2xl max-h-[60vh] object-contain mx-auto rounded-[2.5rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.15)] dark:bg-[#1b2b28]" />
             )}
           </>
         ) : (
@@ -212,7 +220,7 @@ const ActiveExercisePlayer = () => {
                   src={resource.mediaUrl}
                   onTimeUpdate={handleTimeUpdate}
                   onLoadedMetadata={handleLoadedMetadata}
-                  onEnded={() => setIsPlaying(false)}
+                  onEnded={handleMediaEnded}
                   className="hidden"
                 />
               )}

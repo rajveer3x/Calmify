@@ -39,6 +39,26 @@ router.post('/onboarding', auth, async (req, res) => {
   }
 });
 
+router.put('/minutes', auth, async (req, res) => {
+  try {
+    const { minutes } = req.body;
+    
+    if (typeof minutes !== 'number' || minutes < 0) {
+      return res.status(400).json({ message: 'Invalid minutes value' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.userId, 
+      { $inc: { totalMindfulMinutes: minutes } }, 
+      { new: true }
+    ).select('-password');
+    
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update mindful minutes' });
+  }
+});
+
 router.get('/stats', auth, async (req, res) => {
   try {
     let user = await User.findById(req.userId);
