@@ -6,15 +6,24 @@ import { Search, Filter } from 'lucide-react';
 
 const ResourceLibrary = () => {
   const { recommendedResources, isLoadingResources } = useCalmify();
-  const [activeCategory, setActiveCategory] = useState('All Categories');
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   const allResources = recommendedResources;
   const filteredResources = allResources.filter(r => {
-    const matchesCategory = activeCategory === 'All Categories' || r.category?.toUpperCase() === activeCategory.toUpperCase();
+    let matchesFilter = true;
+    if (activeFilter !== 'All') {
+      const upperFilter = activeFilter.toUpperCase();
+      if (upperFilter === 'VIDEO' || upperFilter === 'AUDIO') {
+        matchesFilter = r.type?.toUpperCase() === upperFilter;
+      } else {
+        matchesFilter = r.category?.toUpperCase() === upperFilter;
+      }
+    }
     const matchesSearch = (r.title || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
                           (r.description || '').toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesFilter && matchesSearch;
   });
 
   return (
@@ -34,22 +43,27 @@ const ResourceLibrary = () => {
               className="w-full bg-serene-lowest dark:bg-[#1b2b28] rounded-[2rem] py-6 pl-16 pr-6 shadow-[0_20px_40px_-5px_rgba(42,52,53,0.03)] outline-none focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-[#e0e8e6] placeholder-on-surface/40 dark:placeholder-[#9caaa7] text-lg transition-all"
             />
           </div>
-          <button className="bg-serene-lowest dark:bg-[#1b2b28] px-8 rounded-[2rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.03)] text-on-surface/60 dark:text-[#e0e8e6] hover:text-primary transition-colors flex items-center justify-center">
+          <button 
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className={`px-8 rounded-[2rem] shadow-[0_20px_40px_-5px_rgba(42,52,53,0.03)] transition-colors flex items-center justify-center ${isFilterOpen ? 'bg-primary dark:bg-[#3a665c] text-white' : 'bg-serene-lowest dark:bg-[#1b2b28] text-on-surface/60 dark:text-[#e0e8e6] hover:text-primary'}`}
+          >
             <Filter className="w-6 h-6 stroke-[1.5]" />
           </button>
         </div>
 
-        <div className="flex gap-4 mb-16 overflow-x-auto pb-4 pl-2">
-          {['All Categories', 'Mindfulness', 'Sleep', 'Focus', 'Breathing'].map((cat, i) => (
-            <button 
-              key={cat} 
-              onClick={() => setActiveCategory(cat)}
-              className={`px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs whitespace-nowrap transition-all duration-300 ${activeCategory === cat ? 'bg-primary dark:bg-[#3a665c] text-white shadow-lg shadow-primary/20 dark:shadow-black/20 hover:-translate-y-0.5' : 'bg-serene-lowest dark:bg-[#1b2b28] text-on-surface/60 dark:text-[#9caaa7] hover:bg-serene-low dark:hover:bg-[#121e1c] hover:text-on-surface dark:hover:text-[#e0e8e6]'}`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {isFilterOpen && (
+          <div className="flex gap-4 mb-16 overflow-x-auto pb-4 pl-2 animate-in fade-in slide-in-from-top-4 duration-300">
+            {['All', 'Video', 'Audio', 'Sleep', 'Focus', 'Mindfulness', 'Breathing'].map((filterOption) => (
+              <button 
+                key={filterOption} 
+                onClick={() => setActiveFilter(filterOption)}
+                className={`px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-xs whitespace-nowrap transition-all duration-300 ${activeFilter === filterOption ? 'bg-primary dark:bg-[#3a665c] text-white shadow-lg shadow-primary/20 dark:shadow-black/20 hover:-translate-y-0.5' : 'bg-serene-lowest dark:bg-[#1b2b28] text-on-surface/60 dark:text-[#9caaa7] hover:bg-serene-low dark:hover:bg-[#121e1c] hover:text-on-surface dark:hover:text-[#e0e8e6]'}`}
+              >
+                {filterOption}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoadingResources ? (
