@@ -11,7 +11,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/video1.mp4',
     type: 'VIDEO',
     category: 'MINDFULNESS',
-    duration: '05:00'
+    duration: '00:30'
   },
   {
     title: 'Deep Sleep Journey',
@@ -19,7 +19,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/video2.mp4',
     type: 'VIDEO',
     category: 'SLEEP',
-    duration: '10:00'
+    duration: '00:06'
   },
   {
     title: 'Laser Focus',
@@ -27,7 +27,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/video3.mp4',
     type: 'VIDEO',
     category: 'FOCUS',
-    duration: '15:00'
+    duration: '00:06'
   },
   {
     title: 'Box Breathing Guide',
@@ -35,7 +35,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/video4.mp4',
     type: 'VIDEO',
     category: 'BREATHING',
-    duration: '03:00'
+    duration: '00:08'
   },
   {
     title: 'Evening Wind Down',
@@ -43,7 +43,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/video5.mp4',
     type: 'VIDEO',
     category: 'MINDFULNESS',
-    duration: '10:00'
+    duration: '00:05'
   },
   {
     title: 'Ocean Waves',
@@ -51,7 +51,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/audio1.mp3',
     type: 'AUDIO',
     category: 'SLEEP',
-    duration: '30:00'
+    duration: '02:46'
   },
   {
     title: 'Binaural Beats for Work',
@@ -59,7 +59,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/audio2.mp3',
     type: 'AUDIO',
     category: 'FOCUS',
-    duration: '45:00'
+    duration: '03:23'
   },
   {
     title: 'Guided 4-7-8 Breathing',
@@ -67,7 +67,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/audio3.mp3',
     type: 'AUDIO',
     category: 'BREATHING',
-    duration: '05:00'
+    duration: '03:58'
   },
   {
     title: 'Midday Meditation',
@@ -75,7 +75,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/audio4.mp3',
     type: 'AUDIO',
     category: 'MINDFULNESS',
-    duration: '10:00'
+    duration: '02:49'
   },
   {
     title: 'Rainforest Rainfall',
@@ -83,7 +83,7 @@ const seedData = [
     mediaUrl: 'https://calmify-api.onrender.com/media/audio5.mp3',
     type: 'AUDIO',
     category: 'SLEEP',
-    duration: '60:00'
+    duration: '03:38'
   }
 ];
 
