@@ -85,5 +85,3 @@ Full-Stack Developer | Lovely Professional University
 
 
 ***
-
-<FollowUp label="Ready to deploy this live to the internet?" query="Yes, let's deploy Calmify! How do I get my MERN app live on the internet using free tiers?" />
