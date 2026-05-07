@@ -1,9 +1,9 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 
 const router = express.Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const crisisKeywords = ['suicide', 'die', 'hurt', 'kill', 'end my life'];
 
@@ -26,15 +26,21 @@ router.post('/', auth, async (req, res) => {
       });
     }
 
-    // Initialize Gemini Model with strict system instruction
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      systemInstruction: "You are a calming mindfulness companion for the Calmify app. You are NOT a therapist. Keep responses under 3 sentences. Focus on grounding techniques, empathy, and breathing. If a user seems in distress, gently suggest they seek professional help."
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are a calming mindfulness companion for the Calmify app. You are NOT a therapist. Keep responses under 3 sentences. Focus on grounding techniques, empathy, and breathing. If a user seems in distress, gently suggest they seek professional help."
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      model: "llama3-8b-8192", // Using a fast, standard Groq model
     });
 
-    const result = await model.generateContent(message);
-    const response = await result.response;
-    const replyText = response.text();
+    const replyText = chatCompletion.choices[0]?.message?.content || "I'm here for you.";
 
     res.status(200).json({ reply: replyText });
 
