@@ -37,7 +37,7 @@ router.post('/', auth, async (req, res) => {
           content: message
         }
       ],
-      model: "llama3-8b-8192", // Using a fast, standard Groq model
+      model: "llama-3.1-8b-instant", // Using a fast, standard Groq model
     });
 
     const replyText = chatCompletion.choices[0]?.message?.content || "I'm here for you.";
